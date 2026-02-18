@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./Admin.module.css";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface Overview {
     total_matches: number;
@@ -44,7 +45,7 @@ export default function AdminPage() {
             .catch(() => setLoading(false));
     }, []);
 
-    if (loading) return <div className={styles.loading}>Carregando dashboard...</div>;
+    if (loading) return <LoadingSpinner text="Carregando dashboard..." />;
     if (forbidden) return <div className={styles.forbidden}>⛔ Acesso restrito — apenas admins</div>;
 
     return (

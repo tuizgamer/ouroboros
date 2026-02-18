@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./History.module.css";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface MatchEntry {
     id: string;
@@ -57,7 +58,7 @@ export default function HistoryPage() {
         return `${Math.floor(hours / 24)}d atrás`;
     };
 
-    if (loading) return <div className={styles.loading}>Carregando histórico...</div>;
+    if (loading) return <LoadingSpinner text="Carregando histórico..." />;
 
     return (
         <div className={styles.container}>

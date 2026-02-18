@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import styles from "./Missions.module.css";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import charactersData from "@/data/characters_live.json";
 import type { Character } from "@/types/game";
 
@@ -107,11 +108,7 @@ export default function MissionsPage() {
 
     // --- Loading ---
     if (loading) {
-        return (
-            <div className={styles.container}>
-                <div className={styles.loadingState}>Carregando missões...</div>
-            </div>
-        );
+        return <LoadingSpinner text="Carregando missões..." />;
     }
 
     // --- Sorting: IN_PROGRESS first, then COMPLETED, then CLAIMED ---

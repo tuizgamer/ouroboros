@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./Presets.module.css";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import { useAuth } from "@/hooks/useAuth";
 import { useTeamPresets, type TeamPreset } from "@/hooks/useTeamPresets";
 import charactersData from "@/data/characters_live.json";
@@ -153,14 +154,7 @@ export default function PresetsPage() {
     }
 
     if (loading && presets.length === 0) {
-        return (
-            <div className={styles.container}>
-                <header className={styles.header}>
-                    <h1 className={styles.title}>📋 PRESETS DE TIME</h1>
-                </header>
-                <div className={styles.loading}>⏳ Carregando presets...</div>
-            </div>
-        );
+        return <LoadingSpinner text="Carregando presets..." />;
     }
 
     const emptySlots = maxPresets - presets.length;

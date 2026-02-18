@@ -8,6 +8,7 @@ import missionsData from "@/data/missions.json";
 import { useAuth } from "@/hooks/useAuth";
 import { useTeamPresets } from "@/hooks/useTeamPresets";
 import type { Character, Skill, EnergyColor, Lineage, Mission } from "@/types/game";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const characters = (charactersData as Character[]).filter(c => c.id !== 'char_test_api_01');
 const missions = missionsData as Mission[];
@@ -113,26 +114,19 @@ export default function LobbyPage() {
 
     useEffect(() => {
         if (!user) return;
-        // Fetch player profile (includes unlocked characters)
-        fetch('/api/v1/economy/profile')
-            .then(r => r.json())
-            .then(data => {
-                if (data.success && data.data?.unlockedCharacters) {
-                    setUnlockedIds(new Set(data.data.unlockedCharacters));
-                }
-            })
-            .catch(() => { });
-
-        // Check for active match
-        fetch('/api/v1/matchmaking/status')
-            .then(r => r.json())
-            .then(data => {
-                if (data.success && data.data?.status === 'matched' && data.data.matchId) {
-                    setActiveMatchId(data.data.matchId);
-                    setActiveMatchMode(data.data.mode ?? 'quick');
-                }
-            })
-            .catch(() => { });
+        // Fetch profile + matchmaking status in parallel for faster load
+        Promise.all([
+            fetch('/api/v1/economy/profile').then(r => r.json()).catch(() => null),
+            fetch('/api/v1/matchmaking/status').then(r => r.json()).catch(() => null),
+        ]).then(([profileData, matchData]) => {
+            if (profileData?.success && profileData.data?.unlockedCharacters) {
+                setUnlockedIds(new Set(profileData.data.unlockedCharacters));
+            }
+            if (matchData?.success && matchData.data?.status === 'matched' && matchData.data.matchId) {
+                setActiveMatchId(matchData.data.matchId);
+                setActiveMatchMode(matchData.data.mode ?? 'quick');
+            }
+        });
     }, [user]);
 
     const isCharUnlocked = (char: Character) => char.is_starter || unlockedIds.has(char.id);
@@ -184,14 +178,7 @@ export default function LobbyPage() {
 
     // Show loading state while auth resolves (prevents content flash)
     if (authLoading || !user) {
-        return (
-            <div className={styles.container} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
-                <div style={{ textAlign: 'center', color: 'var(--text-secondary, #888)' }}>
-                    <div style={{ fontSize: '1.5rem', fontWeight: 700, letterSpacing: '3px', marginBottom: '8px' }}>ARENA OUROBOROS</div>
-                    <div>Verificando autenticação...</div>
-                </div>
-            </div>
-        );
+        return <LoadingSpinner text="ARENA OUROBOROS" />;
     }
 
     return (

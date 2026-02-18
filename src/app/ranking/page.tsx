@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import styles from "./Ranking.module.css";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface LeaderboardEntry {
     rank: number;
@@ -38,7 +39,7 @@ export default function RankingPage() {
         return "";
     };
 
-    if (loading) return <div className={styles.loading}>Carregando ranking...</div>;
+    if (loading) return <LoadingSpinner text="Carregando ranking..." />;
 
     return (
         <div className={styles.container}>

@@ -25,9 +25,10 @@ export function useAuth() {
     const supabase = getSupabaseBrowserClient();
 
     useEffect(() => {
-        // Get initial session
-        supabase.auth.getUser().then(({ data: { user } }) => {
-            setState({ user, loading: false, error: null });
+        // Get initial session from local storage (no network call)
+        // Middleware already validates the token server-side via getUser()
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setState({ user: session?.user ?? null, loading: false, error: null });
         });
 
         // Listen for auth changes

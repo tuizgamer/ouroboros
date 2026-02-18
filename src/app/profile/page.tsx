@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import styles from "./Profile.module.css";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import charactersData from "@/data/characters_live.json";
 import type { Character, Lineage } from "@/types/game";
 
@@ -48,9 +49,16 @@ function getEloRank(elo: number): string {
 
 export default function ProfilePage() {
     const router = useRouter();
-    const { user } = useAuth();
+    const { user, signOut } = useAuth();
     const [data, setData] = useState<ProfileData | null>(null);
     const [loading, setLoading] = useState(true);
+    const [loggingOut, setLoggingOut] = useState(false);
+
+    const handleLogout = useCallback(async () => {
+        setLoggingOut(true);
+        await signOut();
+        router.push('/login');
+    }, [signOut, router]);
 
     useEffect(() => {
         if (!user) {
@@ -81,11 +89,7 @@ export default function ProfilePage() {
     }
 
     if (loading) {
-        return (
-            <div className={styles.container}>
-                <div className={styles.loadingState}>Carregando perfil...</div>
-            </div>
-        );
+        return <LoadingSpinner text="Carregando perfil..." />;
     }
 
     if (!data) {
@@ -121,9 +125,18 @@ export default function ProfilePage() {
         <div className={styles.container}>
             <header className={styles.header}>
                 <h1 className={styles.title}>PERFIL DO PILOTO</h1>
-                <button className={styles.backBtn} onClick={() => router.push("/lobby")}>
-                    ← VOLTAR AO LOBBY
-                </button>
+                <div className={styles.headerActions}>
+                    <button className={styles.backBtn} onClick={() => router.push("/lobby")}>
+                        ← VOLTAR AO LOBBY
+                    </button>
+                    <button
+                        className={styles.logoutBtn}
+                        onClick={handleLogout}
+                        disabled={loggingOut}
+                    >
+                        {loggingOut ? 'Saindo...' : '🚪 Sair da Conta'}
+                    </button>
+                </div>
             </header>
 
             <div className={styles.content}>
