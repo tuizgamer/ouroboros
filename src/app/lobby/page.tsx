@@ -93,11 +93,18 @@ function MissionInfo({ missionId }: { missionId?: string }) {
 
 export default function LobbyPage() {
     const router = useRouter();
-    const { user } = useAuth();
+    const { user, loading: authLoading } = useAuth();
     const [selectedId, setSelectedId] = useState<string>(characters[0].id);
     const [teamIds, setTeamIds] = useState<string[]>([]);
     const [filter, setFilter] = useState<LineageFilter>("All");
     const [showPlayModal, setShowPlayModal] = useState(false);
+
+    // --- Auth guard (client-side safety net) ---
+    useEffect(() => {
+        if (!authLoading && !user) {
+            router.push('/login');
+        }
+    }, [authLoading, user, router]);
 
     // --- Dynamic unlock / active match state ---
     const [unlockedIds, setUnlockedIds] = useState<Set<string>>(new Set());
@@ -174,6 +181,18 @@ export default function LobbyPage() {
     const teamChars = teamIds
         .map((id) => characters.find((c) => c.id === id))
         .filter(Boolean) as Character[];
+
+    // Show loading state while auth resolves (prevents content flash)
+    if (authLoading || !user) {
+        return (
+            <div className={styles.container} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+                <div style={{ textAlign: 'center', color: 'var(--text-secondary, #888)' }}>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 700, letterSpacing: '3px', marginBottom: '8px' }}>ARENA OUROBOROS</div>
+                    <div>Verificando autenticação...</div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.container}>
