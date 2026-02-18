@@ -1,0 +1,47 @@
+[
+    {
+        "id": "mission_starter_01",
+        "title": "Veterano da Arena",
+        "description": "Jogue 50 partidas completas (Vitórias ou Derrotas).",
+        "requirement_type": "MATCH_FINISHED",
+        "requirement_value": 50,
+        "reward_type": "LINEAGE_SKILL",
+        "reward_id": "skill_uni_segundo_folego"
+    },
+    {
+        "id": "mission_extrator_01",
+        "title": "Protocolo Titã",
+        "description": "Receber 500 de dano Cinético total e sobreviver em uma única partida (apenas Extratores).",
+        "requirement_type": "DAMAGE_RECEIVED_SURVIVE",
+        "requirement_value": 500,
+        "reward_type": "LINEAGE_SKILL",
+        "reward_id": "skill_lin_sustento_forja"
+    },
+    {
+        "id": "mission_void_vesper",
+        "title": "Chamado do Vazio",
+        "description": "Vencer 10 partidas utilizando um time composto apenas por personagens de linhagem Iron.",
+        "requirement_type": "MATCH_WON_TEAM_LINEAGE",
+        "requirement_value": 10,
+        "reward_type": "CHARACTER",
+        "reward_id": "char_void_01"
+    },
+    {
+        "id": "mission_void_malakor",
+        "title": "O Sacrifício",
+        "description": "Utilizar a mecânica de Reciclagem Oculta 30 vezes em partidas ranqueadas.",
+        "requirement_type": "BURN_ENERGY_COUNT",
+        "requirement_value": 30,
+        "reward_type": "CHARACTER",
+        "reward_id": "char_void_02"
+    },
+    {
+        "id": "mission_void_nyx",
+        "title": "Distorção Real",
+        "description": "Infligir um total de 1000 de dano Volátil acumulado entre todas as suas partidas.",
+        "requirement_type": "DAMAGE_DEALT_VLT",
+        "requirement_value": 1000,
+        "reward_type": "CHARACTER",
+        "reward_id": "char_void_03"
+    }
+]

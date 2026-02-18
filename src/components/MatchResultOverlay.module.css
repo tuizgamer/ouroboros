@@ -1,0 +1,271 @@
+/* ============================================================
+   MatchResult Overlay — Post-Match Rewards Display
+   ============================================================ */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    animation: fade-in 0.4s ease;
+}
+
+.card {
+    width: 100%;
+    max-width: 520px;
+    padding: 32px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    animation: resultSlideUp 0.6s ease;
+}
+
+@keyframes resultSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* --- Result Title --- */
+
+.titleWin {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--neon-green);
+    text-shadow: 0 0 30px rgba(57, 255, 20, 0.5);
+}
+
+.titleLoss {
+    composes: titleWin;
+    color: var(--neon-red);
+    text-shadow: 0 0 30px rgba(255, 49, 49, 0.5);
+}
+
+.titleDraw {
+    composes: titleWin;
+    color: var(--neon-teal);
+    text-shadow: 0 0 30px rgba(0, 242, 255, 0.5);
+}
+
+/* --- Rewards Section --- */
+
+.rewardsSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.rewardsTitle {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.rewardsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.rewardCard {
+    padding: 14px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    text-align: center;
+    transition: border-color 0.2s;
+}
+
+.rewardCard:hover {
+    border-color: rgba(0, 242, 255, 0.3);
+}
+
+.rewardIcon {
+    font-size: 1.4rem;
+    margin-bottom: 6px;
+}
+
+.rewardLabel {
+    font-size: 0.6rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.rewardValue {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: var(--neon-teal);
+}
+
+.rewardValueXp {
+    composes: rewardValue;
+    color: var(--neon-green);
+}
+
+.rewardValueFragments {
+    composes: rewardValue;
+    color: #f1c40f;
+}
+
+/* --- Mission Progress --- */
+
+.missionsSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.missionCard {
+    padding: 10px 14px;
+    background: rgba(0, 242, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.missionCardComplete {
+    composes: missionCard;
+    border-color: rgba(57, 255, 20, 0.3);
+    background: rgba(57, 255, 20, 0.04);
+}
+
+.missionInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.missionName {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.missionProgress {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+}
+
+.missionBadge {
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: var(--radius-xl);
+    text-transform: uppercase;
+}
+
+.missionBadgeComplete {
+    composes: missionBadge;
+    background: var(--neon-green);
+    color: var(--bg-primary);
+}
+
+.missionBadgeProgress {
+    composes: missionBadge;
+    background: var(--glass);
+    color: var(--text-muted);
+    border: 1px solid var(--glass-border);
+}
+
+/* --- Loading / Error --- */
+
+.loadingText {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-align: center;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* --- Actions --- */
+
+.actions {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.backBtn {
+    flex: 1;
+    padding: 14px;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--bg-primary);
+    background: linear-gradient(135deg, var(--neon-teal), var(--neon-blue));
+    border: none;
+    border-radius: var(--radius-md);
+    box-shadow: 0 0 16px rgba(0, 242, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.backBtn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 24px rgba(0, 242, 255, 0.4);
+}
+
+.claimBtn {
+    padding: 8px 16px;
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--bg-primary);
+    background: var(--neon-green);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.claimBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(57, 255, 20, 0.4);
+}

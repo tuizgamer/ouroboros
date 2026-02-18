@@ -1,0 +1,154 @@
+/* ============================================================
+   Arena Ouroboros — Global Design Tokens & Base Styles
+   ============================================================ */
+
+:root {
+  /* --- Neon Palette --- */
+  --neon-teal: #00f2ff;
+  --neon-blue: #0070f3;
+  --neon-green: #39ff14;
+  --neon-red: #ff3131;
+  --neon-purple: #c026d3;
+
+  /* --- Lineage Colors --- */
+  --lineage-iron: #e74c3c;
+  --lineage-neon: #00f2ff;
+  --lineage-void: #a855f7;
+
+  /* --- Surfaces --- */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #111118;
+  --bg-card: #161622;
+  --glass: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-hover: rgba(255, 255, 255, 0.08);
+
+  /* --- Text --- */
+  --text-primary: #f0f0f5;
+  --text-secondary: #8888aa;
+  --text-muted: #555566;
+
+  /* --- Fonts --- */
+  --font-display: var(--font-orbitron), 'Orbitron', sans-serif;
+  --font-body: var(--font-mono), 'JetBrains Mono', monospace;
+
+  /* --- Spacing --- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+}
+
+/* --- Reset --- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--neon-teal);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-display);
+  transition: all 0.2s ease;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* --- Utility Animations --- */
+
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(0, 242, 255, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.6);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-2px, 2px);
+  }
+
+  40% {
+    transform: translate(-2px, -2px);
+  }
+
+  60% {
+    transform: translate(2px, 2px);
+  }
+
+  80% {
+    transform: translate(2px, -2px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+/* --- Responsive Breakpoints (mobile-first) --- */
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 13px;
+  }
+}

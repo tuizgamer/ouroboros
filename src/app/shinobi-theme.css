@@ -1,0 +1,82 @@
+/* 🥷 Shinobi Scroll Theme Tokens */
+
+:root {
+    /* --- Colors --- */
+    --shinobi-bg: #F5EDC9;
+    /* Parchment */
+    --shinobi-accent: #C0392B;
+    /* Crimson Red */
+    --shinobi-accent-dark: #922B21;
+    --shinobi-ink: #1A1A1A;
+    /* Deep Ink/Black */
+
+    /* --- Borders & Surfaces --- */
+    --shinobi-border-width: 4px;
+    --shinobi-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme='shinobi-classic'] {
+    --arena-bg: #F5EDC9;
+    --arena-accent: #C0392B;
+    --arena-text: #1A1A1A;
+}
+
+:root[data-theme='shinobi-modern'] {
+    --arena-bg: #000000;
+    --arena-accent: #39FF14;
+    /* Neon Green default */
+    --arena-text: #F0F0F0;
+    --arena-glass: rgba(255, 255, 255, 0.1);
+}
+
+/* --- UI States --- */
+:root {
+    --shinobi-ready: #27AE60;
+    /* Forest Green */
+    --shinobi-health: #F1C40F;
+    /* Gold/Yellow */
+    --shinobi-empty: #BDC3C7;
+    /* Missing/Empty */
+
+    /* --- Borders & Surfaces --- */
+    --shinobi-border-width: 4px;
+    --shinobi-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Base Utility Components --- */
+
+/* The characteristic Scroll Look */
+.shinobi-scroll {
+    background-color: var(--shinobi-bg);
+    border: var(--shinobi-border-width) solid var(--shinobi-accent);
+    box-shadow: var(--shinobi-shadow);
+    padding: 1rem;
+    position: relative;
+    font-family: inherit;
+    color: var(--shinobi-ink);
+}
+
+/* Character Portrait with thick border */
+.shinobi-portrait {
+    border: 3px solid var(--shinobi-accent);
+    background: white;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+}
+
+/* Energy Bars (Simple squares like the original) */
+.shinobi-energy-dot {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    border: 1px solid var(--shinobi-ink);
+    margin: 2px;
+}
+
+.shinobi-energy-full {
+    background-color: var(--shinobi-ready);
+}
+
+.shinobi-energy-empty {
+    background-color: transparent;
+}

@@ -1,0 +1,165 @@
+/* ============================================================
+   Admin Dashboard — CSS Module
+   ============================================================ */
+
+.container {
+    min-height: 100vh;
+    padding: 24px 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+    animation: fade-in 0.4s ease;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius-md);
+    margin-bottom: 24px;
+}
+
+.title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.backBtn {
+    padding: 8px 16px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.backBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+/* --- KPI Cards --- */
+
+.kpiGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.kpiCard {
+    padding: 20px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.kpiLabel {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+}
+
+.kpiValue {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+/* --- Section --- */
+
+.section {
+    margin-bottom: 32px;
+}
+
+.sectionTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+/* --- Character Table --- */
+
+.charTable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 4px;
+}
+
+.charTable th {
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+}
+
+.charTable th:last-child,
+.charTable td:last-child {
+    text-align: right;
+}
+
+.charRow {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    transition: background 0.2s;
+}
+
+.charRow:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.charRow td {
+    padding: 12px 16px;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.charRow td:first-child {
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.charRow td:last-child {
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.loading {
+    text-align: center;
+    padding: 80px 0;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.forbidden {
+    text-align: center;
+    padding: 80px 0;
+    color: #ef4444;
+    font-size: 1.2rem;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

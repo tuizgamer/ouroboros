@@ -1,0 +1,305 @@
+/* ============================================================
+   Arena Ouroboros — Profile Page Styles
+   Glassmorphism panels, lineage XP bars, character grid
+   ============================================================ */
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    background: var(--bg-primary);
+    gap: 1.5rem;
+}
+
+.header {
+    text-align: center;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--lineage-neon), var(--lineage-iron));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.backBtn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-top: 0.75rem;
+    transition: background 0.2s;
+}
+
+.backBtn:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* --- Main Layout --- */
+
+.content {
+    width: 100%;
+    max-width: 840px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* --- Player Card --- */
+
+.playerCard {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    backdrop-filter: blur(12px);
+}
+
+.playerInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.username {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+}
+
+.eloTag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(241, 196, 15, 0.15);
+    color: #f1c40f;
+    border: 1px solid rgba(241, 196, 15, 0.3);
+    width: fit-content;
+}
+
+.statsRow {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.statValue {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.statLabel {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- Currency Card --- */
+
+.currencyCard {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    backdrop-filter: blur(12px);
+}
+
+.currencyIcon {
+    font-size: 1.5rem;
+}
+
+.currencyInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.currencyLabel {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.currencyValue {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* --- Section --- */
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.sectionTitle {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+}
+
+/* --- Lineage XP Cards --- */
+
+.lineageGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.75rem;
+}
+
+.lineageCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.lineageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lineageName {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.lineageLevel {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+}
+
+.xpBar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.xpFill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+
+.xpText {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    text-align: right;
+}
+
+/* --- Character Grid --- */
+
+.charGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+    gap: 0.5rem;
+}
+
+.charCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+}
+
+.charCardLocked {
+    composes: charCard;
+    opacity: 0.4;
+    filter: grayscale(60%);
+}
+
+.charCardUnlocked {
+    composes: charCard;
+    border-color: #27ae60;
+}
+
+.charColorDot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.charName {
+    font-size: 0.68rem;
+    color: var(--text-primary);
+    text-align: center;
+    font-weight: 600;
+}
+
+.charLockOverlay {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 0.8rem;
+}
+
+/* --- Loading / Login --- */
+
+.loadingState {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+
+.loginGate {
+    text-align: center;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.loginGate p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}

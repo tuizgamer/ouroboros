@@ -1,0 +1,29 @@
+{
+  "charId": "char_test_api_01",
+  "version": 1,
+  "data": {
+    "id": "char_test_api_01",
+    "name": "TestBot UPDATED",
+    "lineage": "Iron",
+    "base_hp": 90,
+    "role": "Test Fighter",
+    "skills": [
+      {
+        "id": "skill_test_01",
+        "name": "Test Punch",
+        "cost": {
+          "Red": 1
+        },
+        "nature": "KNT",
+        "category": "ACT",
+        "reach": "Melee",
+        "logic": {
+          "baseDamage": 20
+        }
+      }
+    ]
+  },
+  "timestamp": "2026-02-16T20:13:28.084Z",
+  "changeSummary": "Initial publish from test script",
+  "author": "Caio (Admin)"
+}

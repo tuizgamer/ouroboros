@@ -1,0 +1,821 @@
+[
+  {
+    "id": "char_extrator_01",
+    "name": "Taurus, o Rompe-Cascos",
+    "lineage": "Iron",
+    "role": "Tanque / Sentinela",
+    "base_hp": 100,
+    "is_starter": true,
+    "portrait_url": "/assets/chars/taurus.png",
+    "passive": {
+      "name": "Núcleo Estável",
+      "description": "Possui 5 de Armadura permanente inquebrável (Unpierceable).",
+      "effects": [
+        {
+          "type": "armor",
+          "value": 5,
+          "unpierceable": true
+        }
+      ]
+    },
+    "skills": [
+      {
+        "id": "skill_taurus_01",
+        "name": "Marreta Hidráulica",
+        "cost": {
+          "Red": 1,
+          "White": 1
+        },
+        "nature": "KNT",
+        "category": "ACT",
+        "reach": "Melee",
+        "description": "Causa 25 de dano. Se o alvo tiver Armadura, +10 de dano adicional.",
+        "logic": {
+          "baseDamage": 25,
+          "bonusDamage": {
+            "condition": "target_has_armor",
+            "value": 10
+          }
+        }
+      },
+      {
+        "id": "skill_taurus_02",
+        "name": "Blindagem Reativa",
+        "cost": {
+          "Red": 1
+        },
+        "nature": "Status",
+        "category": "INST",
+        "reach": "Self",
+        "description": "Ganha 10 de Armadura e status Sentinela por 2 turnos.",
+        "logic": {
+          "status": [
+            {
+              "type": "Armor",
+              "value": 10,
+              "duration": 2
+            },
+            {
+              "type": "Sentinel",
+              "duration": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "skill_taurus_03",
+        "name": "Terremoto Industrial",
+        "cost": {
+          "Red": 2,
+          "White": 1
+        },
+        "nature": "KNT",
+        "category": "CTRL",
+        "reach": "Global",
+        "description": "Causa 20 de dano a todos os inimigos e reduz o dano deles em 10 no próximo turno.",
+        "logic": {
+          "baseDamage": 20,
+          "debuff": {
+            "type": "damage_reduction",
+            "value": 10,
+            "duration": 1
+          }
+        }
+      },
+      {
+        "id": "skill_taurus_04",
+        "name": "Muro de Ferro",
+        "cost": {
+          "Red": 1
+        },
+        "nature": "Defense",
+        "category": "INST",
+        "reach": "Self_Adjacent",
+        "description": "Absorve o próximo ataque Cinético direcionado a Taurus ou um aliado adjacente.",
+        "logic": {
+          "counter": {
+            "filter": "KNT",
+            "absorb": true
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "char_extrator_02",
+    "name": "Rivet, a Engenheira",
+    "lineage": "Iron",
+    "role": "Suporte / Controle de Energia",
+    "base_hp": 100,
+    "is_starter": true,
+    "portrait_url": "/assets/chars/rivet.png",
+    "passive": {
+      "name": "Reciclagem Otimizada",
+      "description": "Sempre que Rivet usa a Reciclagem Oculta, ela recebe 2 energias aleatórias em vez de 1.",
+      "effects": [
+        {
+          "type": "recycling_bonus",
+          "value": 2
+        }
+      ]
+    },
+    "skills": [
+      {
+        "id": "skill_rivet_01",
+        "name": "Drone de Soldagem",
+        "cost": {
+          "Green": 1
+        },
+        "nature": "Cure",
+        "category": "INST",
+        "reach": "Ally",
+        "description": "Cura 15 de HP de um aliado e remove um efeito de Aflição.",
+        "logic": {
+          "heal": 15,
+          "removeStatus": [
+            "Affliction"
+          ]
+        }
+      },
+      {
+        "id": "skill_rivet_02",
+        "name": "Torre de Metralha",
+        "cost": {
+          "Green": 1,
+          "White": 1
+        },
+        "nature": "KNT",
+        "category": "ACT",
+        "reach": "Unique",
+        "description": "Cria uma torre que causa 10 de dano ao inimigo da frente no final de cada turno (Dura 3 turnos).",
+        "logic": {
+          "summon": {
+            "type": "turret",
+            "damage": 10,
+            "duration": 3
+          }
+        }
+      },
+      {
+        "id": "skill_rivet_03",
+        "name": "Sobrecarga de Gerador",
+        "cost": {
+          "White": 2
+        },
+        "nature": "Strategic",
+        "category": "ACT",
+        "reach": "Self",
+        "description": "Transforma todas as suas energias Verdes em Vermelhas para o próximo turno.",
+        "logic": {
+          "energy_convert": {
+            "from": "Green",
+            "to": "Red"
+          }
+        }
+      },
+      {
+        "id": "skill_rivet_04",
+        "name": "Campo de Reparo",
+        "cost": {
+          "Green": 1,
+          "White": 1
+        },
+        "nature": "Buff",
+        "category": "INST",
+        "reach": "Global_Ally",
+        "description": "Todos os aliados recuperam 5 de HP por 3 turnos.",
+        "logic": {
+          "hot": {
+            "value": 5,
+            "duration": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "char_extrator_03",
+    "name": "Jax, o Demolidor",
+    "lineage": "Iron",
+    "role": "Dano Explosivo",
+    "base_hp": 100,
+    "is_starter": true,
+    "portrait_url": "/assets/chars/jax.png",
+    "passive": {
+      "name": "Rastro Volátil",
+      "description": "Sempre que Jax causa dano Volátil, ele aplica 5 de Aflição (Corrosiva) por 1 turno.",
+      "effects": [
+        {
+          "type": "proc_dot",
+          "trigger": "VLT_damage",
+          "value": 5,
+          "duration": 1
+        }
+      ]
+    },
+    "skills": [
+      {
+        "id": "skill_jax_01",
+        "name": "Carga de Detonação",
+        "cost": {
+          "Red": 1,
+          "Green": 1
+        },
+        "nature": "VLT",
+        "category": "ACT",
+        "reach": "Ranged",
+        "description": "Causa 20 de dano. No próximo turno, o alvo recebe +10 de dano de qualquer fonte.",
+        "logic": {
+          "baseDamage": 20,
+          "vulnerability": {
+            "value": 10,
+            "duration": 1
+          }
+        }
+      },
+      {
+        "id": "skill_jax_02",
+        "name": "Lança-Granadas",
+        "cost": {
+          "Green": 1
+        },
+        "nature": "VLT",
+        "category": "ACT",
+        "reach": "Linear",
+        "description": "Causa 15 de dano a um alvo e 5 de dano aos aliados adjacentes.",
+        "logic": {
+          "baseDamage": 15,
+          "splash": 5
+        }
+      },
+      {
+        "id": "skill_jax_03",
+        "name": "Protocolo de Autodestruição",
+        "cost": {
+          "Red": 3
+        },
+        "nature": "VLT",
+        "category": "ACT",
+        "reach": "Single",
+        "description": "Jax perde 30 de HP, mas causa 60 de dano massivo.",
+        "logic": {
+          "baseDamage": 60,
+          "selfDamage": 30
+        }
+      },
+      {
+        "id": "skill_jax_04",
+        "name": "Fusível Curto",
+        "cost": {
+          "Red": 1
+        },
+        "nature": "Buff",
+        "category": "INST",
+        "reach": "Self",
+        "description": "Aumenta o dano da próxima habilidade Volátil em 15 pontos.",
+        "logic": {
+          "skill_boost": {
+            "nature": "VLT",
+            "value": 15
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "char_neon_01",
+    "name": "Zero, o Espectro",
+    "lineage": "Neon",
+    "role": "Infiltrador / Furtivo",
+    "base_hp": 100,
+    "is_starter": true,
+    "portrait_url": "/assets/chars/zero.png",
+    "passive": {
+      "name": "Bypass",
+      "effects": [
+        {
+          "type": "ignore_sentinel"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "id": "skill_zero_01",
+        "name": "Lâmina de Dados",
+        "cost": {
+          "Yellow": 1
+        },
+        "nature": "KNT",
+        "category": "ACT",
+        "reach": "Melee",
+        "description": "Desfere um golpe rápido. Se estiver em modo Furtivo, causa 15 de dano adicional.",
+        "logic": {
+          "baseDamage": 20,
+          "stealthBonus": 15
+        }
+      },
+      {
+        "id": "skill_zero_02",
+        "name": "Camuflagem Óptica",
+        "cost": {
+          "Yellow": 1,
+          "White": 1
+        },
+        "nature": "Stealth",
+        "category": "INST",
+        "reach": "Self",
+        "description": "Torna-se Furtivo por 2 turnos, ficando imune a ataques direcionados.",
+        "logic": {
+          "status": [
+            {
+              "type": "Stealth",
+              "duration": 2
+            }
+          ]
+        }
+      },
+      {
+        "id": "skill_zero_03",
+        "name": "Golpe de Retorno",
+        "cost": {
+          "Yellow": 1,
+          "Blue": 1
+        },
+        "nature": "Counter",
+        "category": "INST",
+        "reach": "Self",
+        "description": "Assume postura defensiva. Se for atacado, anula o dano e contra-ataca com 20 de dano.",
+        "logic": {
+          "counter": {
+            "damage": 20,
+            "negate": true
+          }
+        }
+      },
+      {
+        "id": "skill_zero_04",
+        "name": "Sobrecarga Neural",
+        "cost": {
+          "Blue": 1
+        },
+        "nature": "Control",
+        "category": "CTRL",
+        "reach": "Ranged",
+        "description": "Dispara um pulso que Silencia habilidades de natureza Volt do alvo por 1 turno.",
+        "logic": {
+          "silence_nature": "VLT",
+          "duration": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "char_neon_02",
+    "name": "Glitch, a Tecnomante",
+    "lineage": "Neon",
+    "role": "Controle / Debuff",
+    "base_hp": 100,
+    "is_starter": true,
+    "portrait_url": "/assets/chars/glitch.png",
+    "passive": {
+      "name": "Erro de Sistema",
+      "description": "Glitch possui 20% de chance intrínseca de esquivar de qualquer ataque recebido.",
+      "effects": [
+        {
+          "type": "evasion",
+          "chance": 0.2
+        }
+      ]
+    },
+    "skills": [
+      {
+        "id": "skill_glitch_01",
+        "name": "Vírus Neural",
+        "cost": {
+          "Blue": 1,
+          "White": 1
+        },
+        "nature": "CRS",
+        "category": "AFL",
+        "reach": "Ranged",
+        "description": "Infecta o alvo com um vírus que causa 10 de dano por turno durante 3 turnos.",
+        "logic": {
+          "baseDamage": 10,
+          "dot": {
+            "value": 10,
+            "duration": 3
+          }
+        }
+      },
+      {
+        "id": "skill_glitch_02",
+        "name": "Blackout",
+        "cost": {
+          "Blue": 2
+        },
+        "nature": "Control",
+        "category": "CTRL",
+        "reach": "Single",
+        "description": "Impede o oponente de gerar energia Branca no próximo turno.",
+        "logic": {
+          "disable_energy": "White",
+          "duration": 1
+        }
+      },
+      {
+        "id": "skill_glitch_03",
+        "name": "Inversão de Polaridade",
+        "cost": {
+          "Blue": 1,
+          "White": 2
+        },
+        "nature": "Strategic",
+        "category": "ACT",
+        "reach": "Enemy",
+        "description": "Troca o HP atual com o de um oponente (limite de 40 de HP trocado).",
+        "logic": {
+          "hp_swap_limit": 40
+        }
+      },
+      {
+        "id": "skill_glitch_04",
+        "name": "Troca de Pacotes",
+        "cost": {
+          "Blue": 1
+        },
+        "nature": "Strategic",
+        "category": "INST",
+        "reach": "Random_Enemy",
+        "description": "Reflete o próximo efeito de Debuff recebido para um inimigo aleatório.",
+        "logic": {
+          "reflect_debuff": true
+        }
+      }
+    ]
+  },
+  {
+    "id": "char_neon_03",
+    "name": "Volt, o Corredor",
+    "lineage": "Neon",
+    "role": "DPS Rápido / Velocidade",
+    "base_hp": 100,
+    "is_starter": true,
+    "portrait_url": "/assets/chars/volt.png",
+    "passive": {
+      "name": "Estática",
+      "description": "Sempre que Volt usa uma habilidade que custa energia Amarela, ele ganha 5 de Escudo.",
+      "effects": [
+        {
+          "type": "on_skill_yellow",
+          "shield": 5
+        }
+      ]
+    },
+    "skills": [
+      {
+        "id": "skill_volt_01",
+        "name": "Rajada de Fótons",
+        "cost": {
+          "Yellow": 1
+        },
+        "nature": "VLT",
+        "category": "ACT",
+        "reach": "Ranged",
+        "description": "Dispara múltiplos fótons causando 10 de dano. Pode ser usada até 3 vezes por turno.",
+        "logic": {
+          "baseDamage": 10,
+          "max_use": 3
+        }
+      },
+      {
+        "id": "skill_volt_02",
+        "name": "Aceleração Sináptica",
+        "cost": {
+          "Blue": 1
+        },
+        "nature": "Buff",
+        "category": "INST",
+        "reach": "Self",
+        "description": "Ganha uma ação extra neste turno, mas perde 5 de HP devido ao esforço.",
+        "logic": {
+          "extra_action": 1,
+          "hp_cost_penalty": 5
+        }
+      },
+      {
+        "id": "skill_volt_03",
+        "name": "Curto-Circuito",
+        "cost": {
+          "Yellow": 1,
+          "Blue": 1,
+          "White": 1
+        },
+        "nature": "VLT",
+        "category": "ACT",
+        "reach": "Single",
+        "description": "Causa 30 de dano e quebra toda a Armadura e Barreira do alvo.",
+        "logic": {
+          "baseDamage": 30,
+          "strip_armor_shield": true
+        }
+      },
+      {
+        "id": "skill_volt_04",
+        "name": "Sincronia Estática",
+        "cost": {
+          "Yellow": 1
+        },
+        "nature": "Defense",
+        "category": "INST",
+        "reach": "Self",
+        "description": "Ganha 10 de Barreira. Se a Barreira for quebrada, ganha 1 energia Amarela.",
+        "logic": {
+          "shield": 10,
+          "gain_energy_on_break": "Yellow"
+        }
+      }
+    ]
+  },
+  {
+    "id": "char_void_01",
+    "name": "Vesper, a Voz",
+    "lineage": "Void",
+    "role": "Suporte / Ressurreição",
+    "base_hp": 100,
+    "is_starter": false,
+    "unlock_mission": "mission_void_vesper",
+    "portrait_url": "/assets/chars/vesper.png",
+    "passive": {
+      "name": "Alma Branca",
+      "description": "Sempre que um aliado morre, Vesper canaliza a energia residual ganhando 1 energia Branca.",
+      "effects": [
+        {
+          "type": "on_ally_death",
+          "gain_energy": {
+            "White": 1
+          }
+        }
+      ]
+    },
+    "skills": [
+      {
+        "id": "skill_vesper_01",
+        "name": "Sifão de Alma",
+        "cost": {
+          "Green": 1,
+          "Blue": 1
+        },
+        "nature": "CRS",
+        "category": "ACT",
+        "reach": "Single",
+        "description": "Causa 15 de dano e recupera HP igual a 100% do dano causado.",
+        "logic": {
+          "baseDamage": 15,
+          "lifesteal": 1
+        }
+      },
+      {
+        "id": "skill_vesper_02",
+        "name": "Prece de Proteção",
+        "cost": {
+          "Blue": 1
+        },
+        "nature": "Shield",
+        "category": "INST",
+        "reach": "Global_Ally",
+        "description": "Concede 10 de Barreira a todos os aliados por 1 turno.",
+        "logic": {
+          "shield": 10,
+          "duration": 1
+        }
+      },
+      {
+        "id": "skill_vesper_03",
+        "name": "Reanimação",
+        "cost": {
+          "Green": 3,
+          "White": 1
+        },
+        "nature": "Strategic",
+        "category": "ACT",
+        "reach": "Dead_Ally",
+        "description": "Ressuscita um aliado morto com 30 de HP. Limite de 1 uso por partida.",
+        "logic": {
+          "revive": 30,
+          "limit": 1
+        }
+      },
+      {
+        "id": "skill_vesper_04",
+        "name": "Voz do Vazio",
+        "cost": {
+          "Blue": 1,
+          "White": 1
+        },
+        "nature": "Control",
+        "category": "CTRL",
+        "reach": "Global_Enemy",
+        "description": "Silencia todos os inimigos, impedindo o uso de habilidades e reduzindo seu dano em 15.",
+        "logic": {
+          "debuff": {
+            "type": "damage_reduction",
+            "value": 15,
+            "duration": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "char_void_02",
+    "name": "Malakor, o Profeta",
+    "lineage": "Void",
+    "role": "Dano / Sacrifício",
+    "base_hp": 100,
+    "is_starter": false,
+    "unlock_mission": "mission_void_malakor",
+    "portrait_url": "/assets/chars/malakor.png",
+    "passive": {
+      "name": "Mártir",
+      "description": "Ao morrer, Malakor libera uma explosão de energia vital que cura todos os aliados em 20 de HP.",
+      "effects": [
+        {
+          "type": "on_death",
+          "heal_allies": 20
+        }
+      ]
+    },
+    "skills": [
+      {
+        "id": "skill_malakor_01",
+        "name": "Ritual de Sangue",
+        "cost": {
+          "Green": 1
+        },
+        "nature": "CRS",
+        "category": "AFL",
+        "reach": "Single",
+        "description": "Perde 10 de HP para infligir uma Maldição que causa 15 de dano por 2 turnos.",
+        "logic": {
+          "selfDamage": 10,
+          "dot": {
+            "value": 15,
+            "duration": 2
+          }
+        }
+      },
+      {
+        "id": "skill_malakor_02",
+        "name": "Olhar do Abismo",
+        "cost": {
+          "Blue": 1,
+          "White": 1
+        },
+        "nature": "Control",
+        "category": "CTRL",
+        "reach": "Single",
+        "description": "Deixa o alvo Atordoado por 1 turno, mas Malakor também fica Atordoado pelo esforço.",
+        "logic": {
+          "stun": 1,
+          "self_stun": 1
+        }
+      },
+      {
+        "id": "skill_malakor_03",
+        "name": "Expurgar os Fracos",
+        "cost": {
+          "Green": 1,
+          "Blue": 1,
+          "White": 1
+        },
+        "nature": "CRS",
+        "category": "ACT",
+        "reach": "Global_Enemy",
+        "description": "Causa 10 de dano a todos os inimigos para cada efeito de status negativo que eles possuírem.",
+        "logic": {
+          "damage_per_dot": 10
+        }
+      },
+      {
+        "id": "skill_malakor_04",
+        "name": "Transferência Vital",
+        "cost": {
+          "Green": 2
+        },
+        "nature": "Cure",
+        "category": "INST",
+        "reach": "Ally",
+        "description": "Sacrifica 20 de HP para curar um aliado em 30 de HP.",
+        "logic": {
+          "selfDamage": 20,
+          "heal": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "char_void_03",
+    "name": "Nyx, a Tecelã",
+    "lineage": "Void",
+    "role": "Manipulação",
+    "base_hp": 100,
+    "is_starter": false,
+    "unlock_mission": "mission_void_nyx",
+    "portrait_url": "/assets/chars/nyx.png",
+    "passive": {
+      "name": "Clarividência",
+      "description": "A conexão de Nyx com o Vazio permite que ela veja a energia do oponente no início de cada turno.",
+      "effects": [
+        {
+          "type": "reveal_energy"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "id": "skill_nyx_01",
+        "name": "Fio do Destino",
+        "cost": {
+          "Blue": 1
+        },
+        "nature": "Strategic",
+        "category": "ACT",
+        "reach": "Two_Enemies",
+        "description": "Vincula dois inimigos. 50% do dano recebido por um será replicado no outro por 2 turnos.",
+        "logic": {
+          "damage_link": 0.5,
+          "duration": 2
+        }
+      },
+      {
+        "id": "skill_nyx_02",
+        "name": "Banimento Temporário",
+        "cost": {
+          "Blue": 1,
+          "White": 2
+        },
+        "nature": "Control",
+        "category": "CTRL",
+        "reach": "Single",
+        "description": "Remove um inimigo do combate por 1 turno. Ele não pode agir nem ser alvo de habilidades.",
+        "logic": {
+          "banish": 1
+        }
+      },
+      {
+        "id": "skill_nyx_03",
+        "name": "Singularidade",
+        "cost": {
+          "Green": 1,
+          "Blue": 1,
+          "Red": 1,
+          "Yellow": 1
+        },
+        "nature": "VLT",
+        "category": "ACT",
+        "reach": "Global_Enemy",
+        "description": "Causa 40 de dano a todos os inimigos e remove todas as suas energias coloridas.",
+        "logic": {
+          "baseDamage": 40,
+          "strip_energy": true
+        }
+      },
+      {
+        "id": "skill_nyx_04",
+        "name": "Distorção Temporal",
+        "cost": {
+          "White": 2
+        },
+        "nature": "Strategic",
+        "category": "INST",
+        "reach": "Global",
+        "description": "Inverte a ordem de prioridade das ondas de ação neste turno.",
+        "logic": {
+          "invert_priority": true
+        }
+      }
+    ]
+  },
+  {
+    "id": "char_test_api_01",
+    "name": "TestBot UPDATED",
+    "lineage": "Iron",
+    "base_hp": 90,
+    "role": "Test Fighter",
+    "skills": [
+      {
+        "id": "skill_test_01",
+        "name": "Test Punch",
+        "cost": {
+          "Red": 1
+        },
+        "nature": "KNT",
+        "category": "ACT",
+        "reach": "Melee",
+        "logic": {
+          "baseDamage": 20
+        }
+      }
+    ]
+  }
+]

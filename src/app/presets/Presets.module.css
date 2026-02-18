@@ -1,0 +1,245 @@
+/* ============================================================
+   Presets — CSS Module
+   Full preset management view
+   ============================================================ */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+    gap: 20px;
+    animation: fade-in 0.4s ease;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Header --- */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius-md);
+}
+
+.title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+}
+
+.backBtn {
+    padding: 8px 16px;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    background: var(--glass);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.backBtn:hover {
+    color: var(--text-primary);
+    border-color: var(--neon-cyan);
+}
+
+.slotCounter {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-left: auto;
+    margin-right: 12px;
+}
+
+/* --- Preset Grid --- */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+/* --- Preset Card --- */
+
+.card {
+    position: relative;
+    padding: 16px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(8px);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: all 0.2s ease;
+}
+
+.card:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 16px rgba(0, 255, 180, 0.08);
+}
+
+.cardFavorite {
+    composes: card;
+    border-color: #f1c40f;
+    box-shadow: 0 0 12px rgba(241, 196, 15, 0.15);
+}
+
+/* Name Row */
+.nameRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nameInput {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 4px 0;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.nameInput:focus {
+    border-color: var(--neon-cyan);
+}
+
+.favBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.favBtn:hover {
+    border-color: #f1c40f;
+    color: #f1c40f;
+    background: rgba(241, 196, 15, 0.08);
+}
+
+.favBtnActive {
+    composes: favBtn;
+    border-color: #f1c40f;
+    background: rgba(241, 196, 15, 0.12);
+    color: #f1c40f;
+    box-shadow: 0 0 8px rgba(241, 196, 15, 0.2);
+}
+
+/* Character list */
+.charList {
+    display: flex;
+    gap: 8px;
+}
+
+.charTag {
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--bg-primary);
+    letter-spacing: 0.5px;
+}
+
+/* Actions */
+.cardActions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.deleteBtn {
+    padding: 6px 12px;
+    border: 1px solid rgba(231, 76, 60, 0.3);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.deleteBtn:hover {
+    background: rgba(231, 76, 60, 0.1);
+    border-color: #e74c3c;
+}
+
+/* --- Empty Slot --- */
+
+.emptyCard {
+    padding: 24px 16px;
+    background: transparent;
+    border: 2px dashed var(--glass-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    cursor: default;
+}
+
+/* --- Loading --- */
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 0;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+/* --- Login gate --- */
+.loginGate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 80px 0;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.loginBtn {
+    padding: 10px 24px;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--bg-primary);
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.9rem;
+}

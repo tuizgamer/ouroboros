@@ -1,0 +1,730 @@
+/* ============================================================
+   Arena (Battle Screen) — CSS Module
+   Naruto Arena Classic: INFO | BATTLEFIELD | BOTTOM BAR
+   ============================================================ */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 8px 12px;
+    gap: 6px;
+    animation: fade-in 0.4s ease;
+}
+
+/* =========== LAYER 1: INFO BAR (Top) =========== */
+
+.infoBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+}
+
+.playerInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 100px;
+}
+
+.playerNameAlly {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--neon-teal);
+}
+
+.playerNameEnemy {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--neon-red);
+}
+
+.infoCenter {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.turnBadge {
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: var(--radius-xl);
+    background: rgba(0, 242, 255, 0.08);
+    border: 1px solid var(--neon-teal);
+    color: var(--neon-teal);
+}
+
+.phaseBadge {
+    font-family: var(--font-display);
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    background: rgba(57, 255, 20, 0.1);
+    border: 1px solid var(--neon-green);
+    color: var(--neon-green);
+}
+
+.phaseShowdown {
+    composes: phaseBadge;
+    background: rgba(255, 49, 49, 0.1);
+    border-color: var(--neon-red);
+    color: var(--neon-red);
+    animation: glow-pulse 1.5s infinite;
+}
+
+/* Energy bar in info */
+.energyBar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px 12px;
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.energyBarItem {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.energyDotSmall {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+.energyBarCount {
+    font-size: 0.75rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+}
+
+.energyBarCountProjected {
+    composes: energyBarCount;
+    color: var(--neon-teal);
+    opacity: 0.7;
+    font-style: italic;
+}
+
+.burnToggle {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 49, 49, 0.05);
+    color: var(--text-muted);
+    font-size: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: 2px;
+    transition: all 0.2s;
+}
+
+.burnToggleActive {
+    composes: burnToggle;
+    background: var(--neon-red);
+    color: white;
+    box-shadow: 0 0 6px var(--neon-red);
+    border-color: white;
+}
+
+
+/* =========== LAYER 2: BATTLEFIELD (Middle) =========== */
+
+.battlefield {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 50px 1fr;
+    gap: 6px;
+    align-items: center;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.teamColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 4px;
+}
+
+.vsSymbol {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--text-muted);
+    text-align: center;
+    letter-spacing: 4px;
+    opacity: 0.25;
+}
+
+/* --- Character Card (Naruto Arena Row Style) --- */
+
+.charCard {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+}
+
+.charCardSelected {
+    border-color: var(--neon-green) !important;
+    box-shadow: 0 0 14px rgba(57, 255, 20, 0.25) !important;
+}
+
+.charCardTarget {
+    composes: charCard;
+    cursor: crosshair;
+    border-color: rgba(255, 200, 50, 0.5);
+}
+
+.charCardTarget:hover {
+    border-color: var(--neon-teal);
+    box-shadow: 0 0 14px rgba(0, 242, 255, 0.3);
+}
+
+.charCardDead {
+    composes: charCard;
+    opacity: 0.25;
+    filter: grayscale(1);
+    pointer-events: none;
+}
+
+.charCardShowdownFocus {
+    composes: charCard;
+    border-color: var(--neon-teal);
+    box-shadow: 0 0 18px rgba(0, 242, 255, 0.3);
+    animation: glow-pulse 1.2s infinite;
+}
+
+.charCardHighlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+}
+
+/* --- Character Row: Portrait + Skills inline --- */
+
+.charRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.charPortrait {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    min-width: 0;
+}
+
+.charAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.charMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 90px;
+    max-width: 130px;
+}
+
+.charName {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.shieldInfo {
+    display: flex;
+    gap: 6px;
+    font-size: 0.55rem;
+    color: var(--text-muted);
+}
+
+/* --- HP Bar --- */
+
+.barWrapper {
+    position: relative;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.hpFill {
+    height: 100%;
+    background: linear-gradient(90deg, #e74c3c, #ff6b35);
+    border-radius: 2px;
+    transition: width 0.6s ease;
+}
+
+.barLabel {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 8px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* --- Inline Skill Icons (next to portrait) --- */
+
+.skillIconRow {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    flex: 1;
+    justify-content: flex-start;
+}
+
+.skillIcon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    padding: 0;
+}
+
+.skillIcon:hover:not(:disabled) {
+    border-color: var(--neon-teal);
+    box-shadow: 0 0 8px rgba(0, 242, 255, 0.2);
+    transform: scale(1.08);
+}
+
+.skillIcon:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.skillIconActive {
+    border-color: var(--neon-green) !important;
+    background: rgba(57, 255, 20, 0.1) !important;
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.25) !important;
+}
+
+.skillIconLetter {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    pointer-events: none;
+}
+
+.skillIconLocked {
+    composes: skillIcon;
+    filter: grayscale(1) brightness(0.5);
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-style: dashed;
+}
+
+.skillMissingTag {
+    font-size: 9px;
+    color: var(--neon-red);
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+
+/* --- Status Icons --- */
+
+.statusRow {
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+    margin-top: 2px;
+}
+
+.statusBadge {
+    font-size: 0.5rem;
+    padding: 1px 4px;
+    border-radius: var(--radius-sm);
+    background: rgba(168, 85, 247, 0.12);
+    color: var(--lineage-void);
+    border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+/* --- Pending Action Badge --- */
+
+.pendingBadge {
+    font-size: 0.55rem;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    background: rgba(57, 255, 20, 0.08);
+    color: var(--neon-green);
+    border: 1px solid rgba(57, 255, 20, 0.25);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.pendingBadge:hover {
+    background: rgba(255, 49, 49, 0.12);
+    color: var(--neon-red);
+    border-color: var(--neon-red);
+}
+
+/* =========== LAYER 3: BOTTOM BAR =========== */
+
+.bottomBar {
+    display: grid;
+    grid-template-columns: 140px 1fr 220px;
+    gap: 6px;
+    flex-shrink: 0;
+    min-height: 100px;
+}
+
+/* --- Resolve area (left) --- */
+
+.resolveArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+
+.resolveBtn {
+    padding: 10px 20px;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--neon-teal), var(--neon-blue));
+    color: var(--bg-primary);
+    border: none;
+    border-radius: var(--radius-xl);
+    box-shadow: 0 0 16px rgba(0, 242, 255, 0.2);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.resolveBtn:hover:not(:disabled) {
+    transform: scale(1.04);
+    box-shadow: 0 0 24px rgba(0, 242, 255, 0.4);
+}
+
+.resolveBtn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* --- Skill Description Panel (center) --- */
+
+.skillDescPanel {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: center;
+}
+
+.skillDescName {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--neon-teal);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.skillDescText {
+    font-size: 0.7rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.skillDescMeta {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.skillDescEnergy {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.skillDescPlaceholder {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-style: italic;
+    text-align: center;
+}
+
+.skillCostRow {
+    display: inline-flex;
+    gap: 2px;
+    align-items: center;
+}
+
+/* --- Combat Log (right) --- */
+
+.combatLog {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 8px;
+    overflow-y: auto;
+    max-height: 130px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.logTitle {
+    font-family: var(--font-display);
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--bg-secondary);
+    padding-bottom: 3px;
+}
+
+.logEntry {
+    font-size: 0.6rem;
+    color: var(--text-secondary);
+    padding: 2px 4px;
+    border-radius: var(--radius-sm);
+}
+
+.logEntryActive {
+    composes: logEntry;
+    background: rgba(0, 242, 255, 0.06);
+    color: var(--neon-teal);
+    border-left: 2px solid var(--neon-teal);
+    animation: fade-in 0.3s ease;
+}
+
+.logEntryCancelled {
+    composes: logEntry;
+    color: var(--neon-red);
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.logWaveLabel {
+    font-family: var(--font-display);
+    font-size: 0.45rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 0 1px;
+}
+
+/* --- Floating Damage Numbers --- */
+
+.floatingNumber {
+    position: absolute;
+    top: -12px;
+    right: 8px;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 900;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+    animation: floatUp 1.2s ease forwards;
+    z-index: 10;
+}
+
+.floatingDamage {
+    composes: floatingNumber;
+    color: var(--neon-red);
+}
+
+.floatingHeal {
+    composes: floatingNumber;
+    color: var(--neon-green);
+}
+
+.floatingShield {
+    composes: floatingNumber;
+    color: #3498db;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    70% {
+        opacity: 1;
+        transform: translateY(-25px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+}
+
+/* --- Result Overlay --- */
+
+.resultOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 15, 0.92);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    z-index: 100;
+    animation: fade-in 0.5s ease;
+}
+
+.resultWin {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--neon-green);
+    text-shadow: 0 0 40px rgba(57, 255, 20, 0.5);
+}
+
+.resultLoss {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--neon-red);
+    text-shadow: 0 0 40px rgba(255, 49, 49, 0.5);
+}
+
+.resultDraw {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--neon-teal);
+    text-shadow: 0 0 40px rgba(0, 242, 255, 0.5);
+}
+
+.resultBackBtn {
+    padding: 12px 36px;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.resultBackBtn:hover {
+    background: var(--glass-hover);
+    border-color: var(--neon-teal);
+}
+
+/* --- Responsive --- */
+
+@media (max-width: 900px) {
+    .battlefield {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+
+    .bottomBar {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+
+    .charRow {
+        flex-wrap: wrap;
+    }
+
+    .skillIconRow {
+        justify-content: flex-start;
+    }
+}

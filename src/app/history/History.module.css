@@ -1,0 +1,234 @@
+/* ============================================================
+   History — CSS Module
+   Player match history with expandable roster details
+   ============================================================ */
+
+.container {
+    min-height: 100vh;
+    padding: 24px 16px;
+    max-width: 900px;
+    margin: 0 auto;
+    animation: fade-in 0.4s ease;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius-md);
+    margin-bottom: 24px;
+}
+
+.title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.backBtn {
+    padding: 8px 16px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.backBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+/* --- Match Cards --- */
+
+.matchList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.matchCard {
+    display: grid;
+    grid-template-columns: 60px 1fr 80px 80px 80px;
+    align-items: center;
+    padding: 14px 20px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    transition: background 0.2s, transform 0.15s;
+    cursor: pointer;
+}
+
+.matchCard:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateX(4px);
+}
+
+.result {
+    font-weight: 800;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.resultWin {
+    composes: result;
+    color: #22c55e;
+}
+
+.resultLoss {
+    composes: result;
+    color: #ef4444;
+}
+
+.modeSection {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.modeBadge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    width: fit-content;
+}
+
+.mode_ai {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-muted);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mode_quick {
+    background: rgba(52, 152, 219, 0.15);
+    color: #3498db;
+    border: 1px solid rgba(52, 152, 219, 0.3);
+}
+
+.mode_ranked {
+    background: rgba(241, 196, 15, 0.15);
+    color: #f1c40f;
+    border: 1px solid rgba(241, 196, 15, 0.3);
+}
+
+.teamChars {
+    display: flex;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.charTag {
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+
+.stat {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.statLabel {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.statValue {
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.xpStat {
+    color: #a78bfa;
+}
+
+.dmgStat {
+    color: #f87171;
+}
+
+/* --- Expanded Detail --- */
+
+.expandedDetail {
+    padding: 12px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
+    border-top: none;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    margin-top: -8px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    animation: slide-down 0.2s ease;
+}
+
+.detailItem {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.detailLabel {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+}
+
+.detailValue {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+}
+
+.loading {
+    text-align: center;
+    padding: 80px 0;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.empty {
+    text-align: center;
+    padding: 60px 0;
+    color: var(--text-muted);
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-down {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

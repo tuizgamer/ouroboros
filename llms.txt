@@ -1,0 +1,23 @@
+# Arena Ouroboros
+> 3v3 Turn-Based Combat Engine with Realtime PvP
+
+## Core Manifest
+- **Objective**: Strategic high-stakes combat with energy management and server-authoritative state.
+- **Tech Stack**: Next.js 15, Supabase (Realtime/DB), TypeScript Engine.
+
+## Directory Map
+- `src/lib/engine/`: Core deterministic combat engine (Ouroboros).
+- `src/app/api/v1/`: Server-authoritative APIs for economy and rewards.
+- `src/hooks/`: React hooks for Realtime PvP (`useArenaPvP`) and Matchmaking.
+- `src/types/`: Shared TypeScript interfaces for API and Game State.
+- `docs/`: Technical deep-dives on mechanics and architecture.
+
+## Key Logic
+- **Combat**: Turn-based, each character has 4 skills with varying energy costs.
+- **Energy**: 5 colors (Red, Blue, Green, White, Random). Energy is generated per turn and consumed by skills.
+- **PvP**: Uses Supabase Realtime Broadcast for turn resolution and AFK protection.
+- **Economy**: XP per lineage (thresholds unlock characters), ELO rating (Ranked), and Fragments (Currency).
+
+## Anti-Cheat
+- Engine is mirrored on the server for state validation.
+- Match rewards require match ID validation and server-side reward calculation.

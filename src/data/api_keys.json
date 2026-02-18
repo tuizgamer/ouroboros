@@ -1,0 +1,35 @@
+[
+    {
+        "key": "ak_admin_ouroboros_2026_mK9xPqR7wL3nJ5vB",
+        "name": "Caio (Admin)",
+        "role": "admin",
+        "permissions": [
+            "read",
+            "read_draft",
+            "write",
+            "publish",
+            "delete"
+        ],
+        "createdAt": "2026-02-16T00:00:00Z"
+    },
+    {
+        "key": "ak_editor_arena_2026_hT4yNsF8cG2mD6zA",
+        "name": "Editor Default",
+        "role": "editor",
+        "permissions": [
+            "read",
+            "read_draft",
+            "write"
+        ],
+        "createdAt": "2026-02-16T00:00:00Z"
+    },
+    {
+        "key": "ak_partner_wiki_2026_jU6wQpH1eK9bV3xC",
+        "name": "Ouroboros Fan Wiki",
+        "role": "partner",
+        "permissions": [
+            "read"
+        ],
+        "createdAt": "2026-02-16T00:00:00Z"
+    }
+]

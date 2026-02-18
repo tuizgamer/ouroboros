@@ -1,0 +1,208 @@
+/* ============================================================
+   Login — CSS Module
+   Cyberpunk Neon Auth Screen
+   ============================================================ */
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 16px;
+    background:
+        radial-gradient(ellipse at 30% 20%, rgba(0, 242, 255, 0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 80%, rgba(168, 85, 247, 0.03) 0%, transparent 60%),
+        var(--bg-primary);
+}
+
+.card {
+    width: 100%;
+    max-width: 420px;
+    padding: 40px 32px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+    border-radius: var(--radius-lg);
+    animation: fade-in 0.5s ease;
+}
+
+/* --- Header --- */
+
+.logo {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.logoTitle {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--neon-teal);
+    text-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+}
+
+.logoSubtitle {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 4px;
+}
+
+/* --- Tabs --- */
+
+.tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.tab {
+    flex: 1;
+    padding: 10px 0;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tab:hover {
+    color: var(--text-secondary);
+}
+
+.tabActive {
+    composes: tab;
+    color: var(--neon-teal);
+    border-bottom-color: var(--neon-teal);
+}
+
+/* --- Form --- */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.label {
+    font-size: 0.65rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.input {
+    padding: 12px 14px;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input::placeholder {
+    color: var(--text-muted);
+}
+
+.input:focus {
+    border-color: var(--neon-teal);
+    box-shadow: 0 0 8px rgba(0, 242, 255, 0.15);
+}
+
+/* --- Submit --- */
+
+.submitBtn {
+    margin-top: 8px;
+    padding: 14px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--bg-primary);
+    background: linear-gradient(135deg, var(--neon-teal), var(--neon-blue));
+    border: none;
+    border-radius: var(--radius-md);
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.submitBtn:hover:not(:disabled) {
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(0, 242, 255, 0.4);
+}
+
+.submitBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* --- Error --- */
+
+.error {
+    padding: 10px 14px;
+    background: rgba(255, 49, 49, 0.08);
+    border: 1px solid rgba(255, 49, 49, 0.3);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    color: var(--neon-red);
+    text-align: center;
+}
+
+/* --- Success --- */
+
+.success {
+    padding: 10px 14px;
+    background: rgba(57, 255, 20, 0.06);
+    border: 1px solid rgba(57, 255, 20, 0.3);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    color: var(--neon-green);
+    text-align: center;
+}
+
+/* --- Footer --- */
+
+.footer {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+
+.footerLink {
+    color: var(--neon-teal);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: inherit;
+    font-family: inherit;
+    letter-spacing: inherit;
+}
+
+.footerLink:hover {
+    text-decoration: underline;
+}

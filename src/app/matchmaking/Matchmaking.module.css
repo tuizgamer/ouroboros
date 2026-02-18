@@ -1,0 +1,285 @@
+/* ============================================================
+   Matchmaking — Waiting Screen
+   Glassmorphism + pulse animation for queue search
+   ============================================================ */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 24px;
+    animation: fade-in 0.4s ease;
+}
+
+/* --- Central Card --- */
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    padding: 48px 56px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+    border-radius: var(--radius-lg);
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(0, 242, 255, 0.2), transparent, rgba(0, 255, 136, 0.2));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* --- Mode Badge --- */
+
+.modeBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.modeBadgeQuick {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 200, 100, 0.1));
+    color: var(--neon-green);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.modeBadgeRanked {
+    background: linear-gradient(135deg, rgba(192, 57, 43, 0.3), rgba(146, 43, 33, 0.2));
+    color: #E74C3C;
+    border: 1px solid rgba(192, 57, 43, 0.4);
+}
+
+/* --- Pulse Ring --- */
+
+.pulseWrapper {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pulseRing {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--neon-teal);
+    opacity: 0;
+    animation: pulse-ring 2s ease-out infinite;
+}
+
+.pulseRing:nth-child(2) {
+    animation-delay: 0.6s;
+}
+
+.pulseRing:nth-child(3) {
+    animation-delay: 1.2s;
+}
+
+.pulseIcon {
+    font-size: 3rem;
+    z-index: 1;
+    animation: pulse-icon 2s ease-in-out infinite;
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: scale(0.5);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+@keyframes pulse-icon {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* --- Text --- */
+
+.title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-align: center;
+    line-height: 1.5;
+}
+
+.eloRange {
+    color: var(--neon-teal);
+    font-weight: 600;
+}
+
+/* --- Timer --- */
+
+.timer {
+    font-family: var(--font-mono, monospace);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 2px;
+}
+
+/* --- Cancel Button --- */
+
+.cancelBtn {
+    padding: 10px 32px;
+    border: 1px solid rgba(231, 76, 60, 0.4);
+    background: rgba(231, 76, 60, 0.1);
+    color: #E74C3C;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 1px;
+}
+
+.cancelBtn:hover {
+    background: rgba(231, 76, 60, 0.2);
+    border-color: rgba(231, 76, 60, 0.6);
+    box-shadow: 0 0 16px rgba(231, 76, 60, 0.2);
+}
+
+/* --- Matched State --- */
+
+.matchedCard {
+    composes: card;
+    border-color: var(--neon-green);
+    box-shadow: 0 0 32px rgba(0, 255, 136, 0.15);
+    animation: match-found 0.6s ease;
+}
+
+@keyframes match-found {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.03);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.matchedTitle {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: var(--neon-green);
+    text-shadow: 0 0 16px rgba(0, 255, 136, 0.4);
+    text-align: center;
+}
+
+.opponentInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.opponentName {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.opponentElo {
+    font-size: 0.85rem;
+    color: var(--neon-teal);
+    font-weight: 600;
+}
+
+.transitionText {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    animation: blink 1.2s ease-in-out infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* --- Error State --- */
+
+.errorCard {
+    composes: card;
+    border-color: #E74C3C;
+}
+
+.errorTitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #E74C3C;
+}
+
+.errorText {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
