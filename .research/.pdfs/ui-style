@@ -1,0 +1,74 @@
+Especificação de Design: Interface de Batalha (Estilo Naruto Arena)Este documento contém o prompt mestre para geração da interface e a documentação detalhada do CSS/Estilo utilizado, focando na estética "Retro Browser Game".1. O "Prompt Mestre" (Para Replicação)Use este texto para instruir designers ou IAs a recriarem a tela com precisão.Contexto: Interface de batalha para um jogo de estratégia web baseado em turnos (RPG 2D).Estilo Visual: "Anime Dark UI" (Jogos de navegador dos anos 2000). Estética rígida, sem arredondamentos, alto contraste.Diretrizes Visuais:Geometria: Estritamente quadrada/retangular. border-radius: 0px em tudo.Bordas: Pretas sólidas, espessura de 1px ou 2px (2px solid #000) para separar componentes.Paleta de Cores:Fundo Global: #0a0a0a (Preto profundo) ou Imagem de Vila com overlay escuro.Painéis de UI: #111111 com opacidade (90%).Acentos: Verde Neon (#2ecc71) para Vida, Ciano (#00ffff) para Títulos/Destaques.Tipografia: Branca, fonte Verdana ou Tahoma (Sans-serif clássica), tamanhos pequenos (10px-12px) e negrito.Layout de Batalha (Simétrico):Topo (HUD): Barra horizontal contendo: [Avatar P1 + Nome] --- [Status do Turno] --- [Avatar P2 + Nome].Arena (Centro):Time Esquerda (Aliado): Lista vertical. Cada linha contém: [Avatar] grudado em [Skill 1][Skill 2][Skill 3][Skill 4].Time Direita (Inimigo): Lista vertical espelhada. [Skill 4][Skill 3][Skill 2][Skill 1] grudado em [Avatar].Dimensões: Avatares e Ícones de Skill devem ter EXATAMENTE o mesmo tamanho (ex: 72x72px), formando uma fita sólida.Rodapé (Footer):Esquerda: Painel de Detalhes (Info Box). Mostra imagem grande do item selecionado + Descrição em texto.Direita: Chat Box e Log de Combate. Fundo semitransparente.2. Guia de Estilos CSS (Documentado)Abaixo estão as classes e práticas recomendadas para o desenvolvimento (usando sintaxe Tailwind CSS como referência, mas aplicável a CSS puro).A. Variáveis e Tokens Globais:root {
+  /* Dimensões: Define a "grade" do jogo. Avatar e Skills devem ser idênticos. */
+  --block-size: 72px; 
+  
+  /* Cores Semânticas */
+  --color-bg-dark: #0a0a0a;      /* Fundo da página */
+  --color-panel: #111111;        /* Fundo de containers (Footer, Info) */
+  --color-border: #000000;       /* Bordas de separação */
+  
+  --color-hp: #2ecc71;           /* Verde vibrante para barra de vida */
+  --color-chakra-tai: #2ecc71;   /* Verde (Taijutsu) */
+  --color-chakra-nin: #3498db;   /* Azul (Ninjutsu) */
+  --color-chakra-blood: #e74c3c; /* Vermelho (Bloodline) */
+  --color-chakra-gen: #bdc3c7;   /* Branco/Cinza (Genjutsu) */
+  
+  /* Tipografia */
+  --font-main: 'Verdana', sans-serif; /* Essencial para a legibilidade retro */
+}
+B. Componentes Principais1. O Bloco Padrão (Avatar e Skill)Este é o bloco fundamental da UI. Tanto o rosto do personagem quanto os ícones de habilidade usam esta base.// React/Tailwind Example
+const BlockStyle = `
+  w-[72px] h-[72px]      /* Tamanho fixo quadrado */
+  border-2 border-black  /* Borda grossa preta define o estilo "cartoon/anime" */
+  relative               /* Necessário para posicionar overlays (cooldowns, hp) */
+  cursor-pointer         /* Indica interatividade */
+  transition-all         /* Suaviza o hover */
+  hover:brightness-110   /* Feedback visual simples: aumenta o brilho ao passar o mouse */
+  bg-gray-800            /* Cor de fundo padrão enquanto a imagem carrega */
+`;
+2. Barra de Vida (HP) IntegradaNo design original, a barra de vida não flutua acima do personagem; ela faz parte do bloco do avatar./* Estrutura HTML sugerida:
+   <div class="AvatarBlock">
+      <img src="..." />
+      <div class="HPContainer">
+         <div class="HPBar" style="width: 100%"></div>
+      </div>
+   </div>
+*/
+
+const HPContainerStyle = `
+  absolute bottom-0 left-0 right-0  /* Fixado no rodapé do avatar */
+  h-3                               /* Altura fina (12px) */
+  bg-black                          /* Fundo preto para quando a vida cair */
+  border-t border-black             /* Separação visual da imagem */
+  z-20                              /* Garante que fique acima da imagem */
+`;
+
+const HPBarStyle = `
+  h-full 
+  bg-[#2ecc71]                      /* Verde Neon */
+  flex items-center justify-center  /* Centraliza o texto */
+  text-[8px] font-bold text-black   /* Texto minúsculo, preto para contraste no verde */
+`;
+3. Painel de Informações (Footer Esquerdo)O painel que mostra a descrição da habilidade.const InfoPanelStyle = `
+  w-[500px] h-[140px]     /* Tamanho fixo para evitar reflow de texto */
+  bg-[#111]               /* Fundo muito escuro */
+  border-2 border-black   /* Borda externa */
+  flex                    /* Layout flex para Imagem (Esq) e Texto (Dir) */
+  shadow-2xl              /* Sombra forte para destacar do fundo */
+`;
+
+/* O truque do Título Flutuante ("Personagem" ou "Habilidade") */
+const FloatingLabelStyle = `
+  absolute -top-6 left-0  /* Sai do box para cima */
+  bg-[#111] text-white 
+  px-2 py-0.5 
+  text-xs font-bold 
+  border-2 border-black border-b-0 /* Conecta visualmente ao painel */
+`;
+4. Chat Box (Estilo Log)Fundo transparente para não obstruir totalmente o cenário.const ChatBoxStyle = `
+  bg-black/90             /* 90% de opacidade. Escuro, mas deixa ver vultos atrás */
+  border-2 border-black 
+  font-mono               /* Fonte monoespaçada para parecer um terminal/log */
+  text-[10px]             /* Texto muito pequeno para caber histórico */
+`;
+C. Estratégia de Layout (O "Grid" de Batalha)Para replicar a simetria "Espelhada":Time Esquerda: Use flex-direction: row.Ordem: [Avatar] -> [Skill 1] -> [Skill 2]...Bordas: O Avatar tem borda completa. As Skills removem a borda esquerda (border-l-0) para que as bordas não fiquem duplas (2px + 2px = 4px) quando encostadas.Time Direita: Use flex-direction: row-reverse.Ordem visual no código: [Avatar] -> [Skills].Graças ao row-reverse, o Avatar ficará na extrema direita da tela.Bordas: As Skills removem a borda direita (border-r-0).3. Checklist de ImplementaçãoAo implementar este design, verifique:[ ] Fontes: Estou usando Verdana ou Tahoma? (Fontes modernas como Open Sans ou Roboto deixam o design muito "limpo" e perdem a identidade do jogo original).[ ] Bordas: Todos os meus componentes quadrados têm border: 2px solid black?[ ] Imagens: As imagens têm tratamento de erro? (Se a imagem quebrar, o layout não deve colapsar; deve mostrar um placeholder colorido).[ ] Responsividade: Em telas menores que 1000px, o layout deve esconder o "Chat" ou o "Painel de Info", pois a prioridade é a Arena Central.

@@ -49,7 +49,7 @@ function getEloRank(elo: number): string {
 
 export default function ProfilePage() {
     const router = useRouter();
-    const { user, signOut } = useAuth();
+    const { user, signOut, loading: authLoading } = useAuth();
     const [data, setData] = useState<ProfileData | null>(null);
     const [loading, setLoading] = useState(true);
     const [loggingOut, setLoggingOut] = useState(false);
@@ -60,20 +60,46 @@ export default function ProfilePage() {
         router.push('/login');
     }, [signOut, router]);
 
+    const [error, setError] = useState<string | null>(null);
+
     useEffect(() => {
         if (!user) {
             setLoading(false);
             return;
         }
-        fetch("/api/v1/economy/profile")
-            .then(r => r.json())
-            .then(res => {
-                if (res.success) setData(res.data);
-            })
-            .catch(() => { })
-            .finally(() => setLoading(false));
+
+        const fetchProfile = async () => {
+            try {
+                const r = await fetch("/api/v1/economy/profile");
+                const res = await r.json();
+
+                if (res.success) {
+                    setData(res.data);
+                } else {
+                    // If API returned 404, we show the "first match" message
+                    if (r.status === 404) {
+                        setError("NOT_FOUND");
+                    } else {
+                        setError(res.error || "Erro ao carregar perfil.");
+                    }
+                }
+            } catch (err) {
+                console.error("Profile fetch error:", err);
+                setError("Falha na conexão com o servidor.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProfile();
     }, [user]);
 
+    // 1. First priority: show spinner during auth check OR data fetch
+    if (authLoading || (user && loading)) {
+        return <LoadingSpinner text="Carregando perfil..." />;
+    }
+
+    // 2. Second priority: if auth finished and no user, show login gate
     if (!user) {
         return (
             <div className={styles.container}>
@@ -88,20 +114,34 @@ export default function ProfilePage() {
         );
     }
 
-    if (loading) {
-        return <LoadingSpinner text="Carregando perfil..." />;
-    }
-
-    if (!data) {
+    // 3. Third priority: if authed but got an error or no data
+    if (error === "NOT_FOUND" || (!data && !loading)) {
         return (
             <div className={styles.container}>
-                <div className={styles.loadingState}>Perfil não encontrado. Jogue uma partida primeiro!</div>
+                <div className={styles.loadingState}>
+                    Perfil não encontrado. Jogue uma partida primeiro ou aguarde a ativação!
+                </div>
                 <button className={styles.backBtn} onClick={() => router.push("/lobby")}>
                     VOLTAR AO LOBBY
                 </button>
             </div>
         );
     }
+
+    if (error) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.loadingState} style={{ color: "var(--neon-iron)" }}>
+                    Erro: {error}
+                </div>
+                <button className={styles.backBtn} onClick={() => router.push("/lobby")}>
+                    VOLTAR AO LOBBY
+                </button>
+            </div>
+        );
+    }
+
+    if (!data) return null; // Should be covered by above, but for types
 
     const { profile, currencies, lineageProgress, unlockedCharacters } = data;
     const winRate = profile.total_battles > 0

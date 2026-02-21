@@ -49,29 +49,38 @@ function getRewardDisplay(mission: MissionData["mission"]) {
 
 export default function MissionsPage() {
     const router = useRouter();
-    const { user } = useAuth();
+    const { user, loading: authLoading } = useAuth();
     const [missions, setMissions] = useState<MissionData[]>([]);
     const [loading, setLoading] = useState(true);
     const [claiming, setClaiming] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     const loadMissions = useCallback(async () => {
+        setLoading(true);
+        setError(null);
         try {
             const res = await fetch("/api/v1/missions");
             const data = await res.json();
             if (data.success) {
                 setMissions(data.data ?? []);
+            } else {
+                setError(data.error || "Ocorreu um erro ao carregar missões.");
             }
-        } catch {
-            // Silent fail
+        } catch (err) {
+            console.error("Missions fetch error:", err);
+            setError("Falha na conexão.");
         } finally {
             setLoading(false);
         }
     }, []);
 
     useEffect(() => {
-        if (user) loadMissions();
-        else setLoading(false);
-    }, [user, loadMissions]);
+        if (user) {
+            loadMissions();
+        } else if (!authLoading) {
+            setLoading(false);
+        }
+    }, [user, authLoading, loadMissions]);
 
     const handleClaim = async (missionId: string) => {
         setClaiming(missionId);
@@ -91,7 +100,25 @@ export default function MissionsPage() {
         }
     };
 
-    // --- Login Gate ---
+    // 1. Show spinner during auth check OR data fetch
+    if (authLoading || (user && loading)) {
+        return <LoadingSpinner text="Carregando missões..." />;
+    }
+
+    if (error && user) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.errorState}>
+                    <p>⚠️ {error}</p>
+                    <button className={styles.backBtn} onClick={loadMissions}>
+                        TENTAR NOVAMENTE
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    // 2. Show login gate only after auth check finished and no user found
     if (!user) {
         return (
             <div className={styles.container}>
@@ -106,11 +133,6 @@ export default function MissionsPage() {
         );
     }
 
-    // --- Loading ---
-    if (loading) {
-        return <LoadingSpinner text="Carregando missões..." />;
-    }
-
     // --- Sorting: IN_PROGRESS first, then COMPLETED, then CLAIMED ---
     const sorted = [...missions].sort((a, b) => {
         const order = { IN_PROGRESS: 0, COMPLETED: 1, CLAIMED: 2 };
@@ -121,7 +143,6 @@ export default function MissionsPage() {
         <div className={styles.container}>
             <header className={styles.header}>
                 <h1 className={styles.title}>MISSÕES</h1>
-                <p className={styles.subtitle}>Complete desafios para desbloquear personagens e recompensas</p>
                 <button className={styles.backBtn} onClick={() => router.push("/lobby")}>
                     ← VOLTAR AO LOBBY
                 </button>

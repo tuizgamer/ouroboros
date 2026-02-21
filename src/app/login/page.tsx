@@ -8,6 +8,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import styles from './Login.module.css';
 
 type AuthMode = 'login' | 'signup';
@@ -21,6 +22,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
+    const [redirecting, setRedirecting] = useState(false);
 
     const switchMode = (newMode: AuthMode) => {
         setMode(newMode);
@@ -41,12 +43,17 @@ export default function LoginPage() {
         } else {
             const ok = await signIn(email, password);
             if (ok) {
+                setRedirecting(true);
                 // Initialize economy data on first login
                 await fetch('/api/v1/economy/profile', { method: 'POST' });
                 router.push('/lobby');
             }
         }
     };
+
+    if (redirecting) {
+        return <LoadingSpinner text="Autenticado! Entrando na Arena..." />;
+    }
 
     return (
         <div className={styles.container}>

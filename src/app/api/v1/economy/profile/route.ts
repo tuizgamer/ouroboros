@@ -17,10 +17,52 @@ export async function GET() {
         return apiError('UNAUTHORIZED', 'Not authenticated', 401);
     }
 
-    const dashboard = await getPlayerDashboard(supabase, user.id);
+    let dashboard = await getPlayerDashboard(supabase, user.id);
+
+    // AUTO-REPAIR: If user is authed but has no dashboard/profile, initialize it
+    if (!dashboard) {
+        console.log(`[API] Auto-repairing profile for user ${user.id}...`);
+
+        // 1. Check if profile exists (trigger might have failed or session is old)
+        const { data: profile } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', user.id)
+            .single();
+
+        if (!profile) {
+            // Force create profile if missing (trigger fallback)
+            await supabase.from('profiles').upsert({
+                id: user.id,
+                username: user.email?.split('@')[0] || 'Pilot',
+                elo_rating: 1000,
+            });
+        }
+
+        // 2. Initialize currencies
+        await supabase.from('currencies').upsert([
+            { profile_id: user.id, currency_id: 'core_fragments', balance: 0 },
+        ]);
+
+        // 3. Initialize lineage progress
+        for (const lineage of ['iron', 'neon', 'void']) {
+            await supabase.from('lineage_progress').upsert({
+                profile_id: user.id,
+                lineage_id: lineage,
+                xp: 0,
+                level: 1,
+            });
+        }
+
+        // 4. Initialize player missions
+        await initializePlayerMissions(supabase, user.id);
+
+        // 5. Fetch again
+        dashboard = await getPlayerDashboard(supabase, user.id);
+    }
 
     if (!dashboard) {
-        return apiError('NOT_FOUND', 'Player profile not found', 404);
+        return apiError('NOT_FOUND', 'Could not create or find profile', 404);
     }
 
     return apiSuccess(dashboard);

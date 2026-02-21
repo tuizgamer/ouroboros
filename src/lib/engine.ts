@@ -422,8 +422,13 @@ export class OuroborosEngine {
   public static grantEnergy(state: MatchState, characters?: Character[]): void {
     const teams: Array<keyof Pick<MatchState, 'playerA' | 'playerB'>> = ['playerA', 'playerB'];
 
-    // Scale-up White: starts at 0 on T1, then +1 per turn
-    const whiteAmount = state.turn - 1;
+    // Rules update:
+    // T1: 0 White, 3 random colored.
+    // Even turns (2, 4, 6, 8, 10): +1 White.
+    // Odd turns (3, 5, 7, 9): 0 White.
+    // Max White: 5.
+    const isEvenTurn = state.turn % 2 === 0;
+    const whiteIncrement = isEvenTurn ? 1 : 0;
 
     for (const teamKey of teams) {
       const teamState = state[teamKey];
@@ -432,7 +437,8 @@ export class OuroborosEngine {
 
       // 1. Grant White to the team pool (held by the leader/first alive)
       const leader = aliveChars[0];
-      leader.energy.White = (leader.energy.White || 0) + whiteAmount;
+      const currentWhite = leader.energy.White || 0;
+      leader.energy.White = Math.min(5, currentWhite + whiteIncrement);
 
       // 2. Grant 3 random colored energies + any extras from previous turn's Burn
       const extraAmount = teamState.nextTurnExtraEnergy || 0;
